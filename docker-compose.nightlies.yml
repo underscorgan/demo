@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+  puppet:
+    hostname: puppet
+    image: underscorgan/puppetserver:puppet6-nightly
+    ports:
+      - 8140:8140
+    environment:
+      # DNS_ALT_NAMES must be set before starting the stack the first time,
+      # and must list all the names under which the puppetserver can be
+      # reached. 'puppet' must be one of them, otherwise puppetdb won't be
+      # able to get a cert. Add other names as a comma-separated list
+      - DNS_ALT_NAMES
+      - PUPPETDB_SERVER_URLS=https://puppetdb:8081
+      - AUTOSIGN=false
+    volumes:
+      - ./code:/etc/puppetlabs/code/
+      - ./puppet:/etc/puppetlabs/puppet/
+      - ./serverdata:/opt/puppetlabs/server/data/puppetserver/
+
+  postgres:
+    image: puppet/puppetdb-postgres:9.6.3
+    environment:
+      - POSTGRES_PASSWORD=puppetdb
+      - POSTGRES_USER=puppetdb
+    expose:
+      - 5432
+    volumes:
+      - ./puppetdb-postgres/data:/var/lib/postgresql/data/
+
+  puppetdb:
+    hostname: puppetdb:puppet6-nightly
+    image: underscorgan/puppetdb
+    environment:
+      - PUPPETDB_PASSWORD=puppetdb
+      - PUPPETDB_USER=puppetdb
+    ports:
+      - 8080
+      - 8081
+    depends_on:
+      - postgres
+      - puppet
+    volumes:
+      - ./puppetdb/ssl:/etc/puppetlabs/puppet/ssl/
