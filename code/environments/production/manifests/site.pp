@@ -12,9 +12,7 @@ node 'docker-agent.platform9.puppet.net' {
     owner   => 'root',
     group   => 'root',
     mode    => '644',
-    content => '<html><body><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I think it&#39;s important to let y&#39;all know, the cats have been ridiculously snuggly this week. <a href="https://t.co/29zdxyFMVv">pic.twitter.com/29zdxyFMVv</a></p>&mdash; morgan (@KnittyNerd) <a href="https://twitter.com/KnittyNerd/status/1010358121103962112?ref_src=twsrc%5Etfw">June 23, 2018</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></body></html>
-',
+    content => '<html><head><title>Docker demo!</title></head><body><iframe src="https://giphy.com/embed/JIX9t2j0ZTN9S" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/JIX9t2j0ZTN9S">via GIPHY</a></p><h1>For more information, please see pup.pt/2018-docker-demo</h1> </body></html>',
   }
 
   nginx::resource::server { 'docker-agent.platform9.puppet.net':

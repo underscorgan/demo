@@ -13,7 +13,7 @@ services:
       # able to get a cert. Add other names as a comma-separated list
       - DNS_ALT_NAMES
       - PUPPETDB_SERVER_URLS=https://puppetdb:8081
-      - AUTOSIGN=false
+      #- PUPPETSERVER_JAVA_ARGS="-Xmx1024m"
     volumes:
       - ./code:/etc/puppetlabs/code/
       - ./puppet:/etc/puppetlabs/puppet/
@@ -30,8 +30,8 @@ services:
       - ./puppetdb-postgres/data:/var/lib/postgresql/data/
 
   puppetdb:
-    hostname: puppetdb:puppet6-nightly
-    image: underscorgan/puppetdb
+    hostname: puppetdb
+    image: underscorgan/puppetdb:puppet6-nightly
     environment:
       - PUPPETDB_PASSWORD=puppetdb
       - PUPPETDB_USER=puppetdb
